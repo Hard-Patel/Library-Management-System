@@ -1,9 +1,13 @@
 import { Request, Response } from "express";
 import { validateAddBook, validateAddMultipleBooks, validateUpdateBook } from "../../validators/books";
-import { addBookToDB, addMultipleBookToDB, getBookFromDB, updateBookToDB } from "../../model/books";
+import { addBookToDB, addMultipleBookToDB, getBookDetailsFromDB, getBookFromDB, updateBookToDB } from "../../model/books";
 
 export const getBook = async (request: Request, response: Response) => {
   await getBookFromDB(request, response);
+};
+
+export const getBookDetails = async (request: Request, response: Response) => {
+  await getBookDetailsFromDB(request, response);
 };
 
 export const addBook = async (request: Request, response: Response) => {
