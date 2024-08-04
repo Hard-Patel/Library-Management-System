@@ -14,13 +14,16 @@ datasource db {
 }
 
 model Book {
-  id            Int       @id @default(autoincrement())
+  id            Int           @id @default(autoincrement())
   title         String
   publishedDate DateTime?
-  isbn          String?   @unique
-  quantity      Int       @default(0)
+  isbn          String?       @unique
+  quantity      Int           @default(0)
   authorId      Int
-  authors       Author    @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  authors       Author        @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  User          User?         @relation(fields: [userId], references: [id])
+  userId        Int?
+  Transaction   Transaction[]
 }
 
 model Author {
@@ -28,4 +31,25 @@ model Author {
   name      String
   birthDate DateTime?
   books     Book[]
+}
+
+model User {
+  id          Int           @id @default(autoincrement())
+  firstName   String
+  lastName    String
+  email       String        @unique
+  password    String
+  books       Book[]
+  Transaction Transaction[]
+}
+
+model Transaction {
+  id              Int       @id @default(autoincrement())
+  userId          Int
+  bookId          Int
+  checkoutDate    DateTime
+  dueDate         DateTime?
+  isDue           Boolean   @default(true)
+  user            User      @relation(fields: [userId], references: [id])
+  book            Book      @relation(fields: [bookId], references: [id])
 }

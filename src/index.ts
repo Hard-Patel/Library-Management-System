@@ -3,6 +3,8 @@ import bodyParser from "body-parser";
 import morgan from "morgan";
 import { booksRouter } from "./routes";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
+import { usersRouter } from "./routes/users";
+import { transactionsRouter } from "./routes/transactions";
 require("dotenv").config();
 
 const app = express();
@@ -17,32 +19,13 @@ const port = process.env.PORT || 3000;
 
 // Use the route handlers
 app.use("/v1/books", booksRouter);
+app.use("/v1/users", usersRouter);
+app.use("/v1/transactions", transactionsRouter);
 
 // Error handling middleware
-app.use((err: Error, req: Request, res: Response) => {
-  console.error(err.stack);
-  if (err instanceof PrismaClientKnownRequestError) {
-    switch (err.code) {
-      case "P2002":
-        // Unique constraint failed
-        res
-          .status(400)
-          .json({ error: "Unique constraint failed", details: err.meta });
-        break;
-      case "P2003":
-        // Foreign key constraint failed
-        res
-          .status(400)
-          .json({ error: "Foreign key constraint failed", details: err.meta });
-        break;
-      default:
-        res.status(500).json({ error: "Database error", details: err.message });
-        break;
-    }
-  } else {
-    // Handle other types of errors
-    res.status(500).json({ error: "Server error", message: err.message });
-  }
+app.use((req: Request, res: Response) => {
+  console.log("res: ", res);
+  res.json({ error: "Server error" });
 });
 
 app.listen(port, () => {
