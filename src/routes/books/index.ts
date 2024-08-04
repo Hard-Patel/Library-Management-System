@@ -1,5 +1,5 @@
 import express from "express";
-import { addBook, addMultipleBook, getBook, getBookDetails, updateBook } from "../../controller/books";
+import { addBook, addMultipleBook, deleteBook, getBook, getBookDetails, updateBook } from "../../controller/books";
 import { BooksRoutes } from "../../constants/routes";
 
 const router = express.Router();
@@ -13,5 +13,7 @@ router.post(BooksRoutes.AddBook, addBook);
 router.post(BooksRoutes.AddMultipleBook, addMultipleBook);
 
 router.post(BooksRoutes.UpdateBook, updateBook);
+
+router.delete(`${BooksRoutes.DeleteBook}/:book_id`, deleteBook);
 
 export { router as booksRouter };

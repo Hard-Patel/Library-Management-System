@@ -5,6 +5,7 @@ export const validateAddBook = (request: IAddBookRequest) => {
   const schema = z.object({
     title: z.string(),
     isbn: z.string(),
+    quantity: z.number(),
     publish_date: z.string().datetime(),
     author_name: z.string(),
     author_birth_date: z.string().datetime(),

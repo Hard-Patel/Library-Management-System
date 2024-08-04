@@ -18,6 +18,7 @@ model Book {
   title         String
   publishedDate DateTime?
   isbn          String?   @unique
+  quantity      Int       @default(0)
   authorId      Int
   authors       Author    @relation(fields: [authorId], references: [id], onDelete: Cascade)
 }

@@ -1,6 +1,17 @@
 import { Request, Response } from "express";
-import { validateAddBook, validateAddMultipleBooks, validateUpdateBook } from "../../validators/books";
-import { addBookToDB, addMultipleBookToDB, getBookDetailsFromDB, getBookFromDB, updateBookToDB } from "../../model/books";
+import {
+  validateAddBook,
+  validateAddMultipleBooks,
+  validateUpdateBook,
+} from "../../validators/books";
+import {
+  addBookToDB,
+  addMultipleBookToDB,
+  deleteBookFromDB,
+  getBookDetailsFromDB,
+  getBookFromDB,
+  updateBookToDB,
+} from "../../model/books";
 
 export const getBook = async (request: Request, response: Response) => {
   await getBookFromDB(request, response);
@@ -45,6 +56,20 @@ export const updateBook = async (request: Request, response: Response) => {
     response.status(400).send({
       message: "Bad reqeust or invalid arguments",
       error: valid.error,
+    });
+  }
+};
+
+export const deleteBook = async (request: Request, response: Response) => {
+  const { book_id } = request.params;
+  console.log('book_id: ', book_id);
+
+  if (book_id) {
+    await deleteBookFromDB(request, response);
+  } else {
+    response.status(400).json({
+      message: "Bad reqeust or invalid arguments",
+      error: "book_id is required",
     });
   }
 };

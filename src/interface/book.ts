@@ -4,6 +4,7 @@ export interface IAddBookRequest {
     author_name: string;
     publish_date: Date;
     author_birth_date: Date;
+    quantity: number;
 }
 
 export interface IAddMultipleBookRequest {
@@ -11,6 +12,7 @@ export interface IAddMultipleBookRequest {
     isbn: string;
     author_id: number;
     publish_date: Date;
+    quantity: number;
 }
 
 export interface IUpdateBookRequest {
@@ -19,4 +21,5 @@ export interface IUpdateBookRequest {
     isbn: string;
     publish_date: Date;
     author_id: string;
+    quantity: number;
 }

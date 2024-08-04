@@ -25,6 +25,8 @@ export const getBookFromDB = async (request: Request, response: Response) => {
     }
     if (Number(size) > 0) {
       query["take"] = Number(size);
+    } else {
+      query["take"] = 10;
     }
     if (search) {
       query["where"] = {
@@ -90,14 +92,21 @@ export const getBookDetailsFromDB = async (
 
 export const addBookToDB = async (request: Request, response: Response) => {
   try {
-    const { title, isbn, author_birth_date, publish_date, author_name } =
-      request.body as IAddBookRequest;
+    const {
+      title,
+      isbn,
+      author_birth_date,
+      quantity,
+      publish_date,
+      author_name,
+    } = request.body as IAddBookRequest;
 
     const Book = await prismaClient.book.create({
       data: {
         title,
         isbn,
         publishedDate: publish_date,
+        quantity,
         authors: {
           create: {
             name: author_name,
@@ -226,5 +235,30 @@ export const updateBookToDB = async (request: Request, response: Response) => {
         data: {},
       });
     }
+  }
+};
+
+export const deleteBookFromDB = async (
+  request: Request,
+  response: Response
+) => {
+  try {
+    const { book_id } = request.params;
+
+    const Book = await prismaClient.book.delete({
+      where: { id: Number(book_id) },
+    });
+
+    response.send({
+      message: "Book deleted successfully",
+      data: { book_id },
+    });
+  } catch (error: any) {
+    console.log("e: ", error);
+
+    response.status(500).send({
+      message: "Internal server error",
+      data: {},
+    });
   }
 };

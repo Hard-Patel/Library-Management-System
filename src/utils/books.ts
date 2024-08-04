@@ -6,9 +6,10 @@ import {
 } from "../interface/book";
 import { Prisma } from "@prisma/client";
 
-const allowedUpdates = ["title", "isbn", "publish_date", "author_id"];
+const allowedUpdates = ["title", "quantity", "isbn", "publish_date", "author_id"];
 const mapAllowedUpdates: { [key: string]: any } = {
   title: "title",
+  quantity: "quantity",
   isbn: "isbn",
   publish_date: "publishedDate",
   author_id: "authorId",
@@ -43,6 +44,7 @@ export const mapUpdatedData = (data: IUpdateBookRequest) => {
 
 const mapAddBook: { [key: string]: any } = {
   title: "title",
+  quantity: "quantity",
   isbn: "isbn",
   publish_date: "publishedDate",
   author_id: "authorId",
