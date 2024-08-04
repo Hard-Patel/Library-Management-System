@@ -15,7 +15,11 @@ import {
 export const getBookFromDB = async (request: Request, response: Response) => {
   const { sortBy, page, size, search = "" } = request.query;
   try {
-    const query: Prisma.BookFindManyArgs<DefaultArgs> = {};
+    const query: Prisma.BookFindManyArgs<DefaultArgs> = {
+      include: {
+        authors: true,
+      },
+    };
 
     if (Number(page) && Number(size)) {
       query["skip"] = Number(size) * (Math.max(Number(page), 1) - 1);
@@ -75,6 +79,7 @@ export const getBookDetailsFromDB = async (
     }
     const Books = await prismaClient.book.findUnique({
       where: { id: Number(book_id) },
+      include: { authors: true },
     });
 
     response.send({
