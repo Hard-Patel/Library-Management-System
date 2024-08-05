@@ -1,6 +1,4 @@
 import { Request, Response } from "express";
-import { deleteUserFromDB, updateUserToDB } from "../../model/users";
-import { validateUpdateUser } from "../../validators/users";
 import {
   addAuthorToDB,
   deleteAuthorFromDB,

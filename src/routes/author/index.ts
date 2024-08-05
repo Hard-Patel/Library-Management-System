@@ -1,13 +1,5 @@
 import express from "express";
 import { AuthorRoutes } from "../../constants/routes";
-import {
-  addUser,
-  deleteUser,
-  getUserDetails,
-  getUsers,
-  loginUser,
-  updateUser,
-} from "../../controller/users";
 import { authentication } from "../../middleware/authentication";
 import {
   addAuthor,

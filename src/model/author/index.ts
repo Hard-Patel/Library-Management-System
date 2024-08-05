@@ -4,10 +4,7 @@ import {
   DefaultArgs,
   PrismaClientKnownRequestError,
 } from "@prisma/client/runtime/library";
-import { IAddUserRequest, IUpdateUserRequest } from "../../interface/user";
-import { mapUpdatedUser } from "../../utils/users";
-import { Prisma, PrismaClient } from "@prisma/client";
-import bcrypt from "bcrypt";
+import { Prisma } from "@prisma/client";
 import { IAddAuthor, IUpdateAuthorRequest } from "../../interface/author";
 import { mapUpdatedAuthor } from "../../utils/author";
 require("dotenv").config();

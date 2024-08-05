@@ -1,6 +1,4 @@
 import _ from "lodash";
-import { IUpdateBookRequest } from "../interface/book";
-import { Prisma } from "@prisma/client";
 import { IUpdateUserRequest } from "../interface/user";
 import { updateKey } from "./common";
 

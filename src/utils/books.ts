@@ -1,6 +1,5 @@
 import _ from "lodash";
 import {
-  IAddBookRequest,
   IAddMultipleBookRequest,
   IUpdateBookRequest,
 } from "../interface/book";
