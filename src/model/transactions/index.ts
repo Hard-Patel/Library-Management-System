@@ -1,10 +1,7 @@
 import { Request, Response } from "express";
-import { prismaClient } from "../../client/prisma";
-import {
-  DefaultArgs,
-  PrismaClientKnownRequestError,
-} from "@prisma/client/runtime/library";
-import { IAssignBookRequest } from "../../interface/transactions";
+import { assignBookTransaction } from "./assign";
+import { returnBookTransaction } from "./return";
+import { IReturnBookRequest } from "../../interface/transactions";
 
 export const assignBookToUser = async (
   request: Request,
@@ -13,37 +10,48 @@ export const assignBookToUser = async (
   try {
     const { book_id, user, assign_time, return_time } = request.body;
 
-    const Transaction = await prismaClient.transaction.create({
-      data: {
-        bookId: book_id,
-        userId: user.id,
-        checkoutDate: assign_time || new Date(),
-        isDue: true,
-        dueDate: return_time || null,
-      },
-    });
-
-    const Book = await prismaClient.book.update({
-      where: { id: book_id },
-      data: {
-        quantity: { decrement: 1 },
-        User: {
-          connect: {
-            id: user.id,
-          },
-        },
-      },
+    const Transaction = await assignBookTransaction({
+      assign_time,
+      book_id,
+      return_time,
+      user_id: user.id,
     });
 
     response.send({
       message: "Book assigned successfully!",
-      // data: User,
+      data: { transaction: Transaction },
     });
   } catch (error: any) {
     console.log("e: ", error);
     // Handle other types of errors
     response.status(500).send({
-      message: "Internal server error",
+      message: error?.message || "Internal server error",
+      data: {},
+    });
+  }
+};
+
+export const returnBookFromUser = async (
+  request: Request,
+  response: Response
+) => {
+  try {
+    const { transaction_id, return_date = new Date() } = request.body as IReturnBookRequest;
+
+    const Transaction = await returnBookTransaction({
+      transaction_id,
+      return_date
+    });
+
+    response.send({
+      message: "Book returned successfully!",
+      data: { transaction: Transaction },
+    });
+  } catch (error: any) {
+    console.log("e: ", error);
+    // Handle other types of errors
+    response.status(500).send({
+      message: error?.message || "Internal server error",
       data: {},
     });
   }

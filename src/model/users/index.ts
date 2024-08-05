@@ -124,12 +124,32 @@ export const getUserDetailsFromDB = async (
     }
     const Books = await prismaClient.user.findUnique({
       where: { id: Number(user_id) },
-      include: { books: true },
+      include: {
+        books: true,
+        Transaction: true,
+        _count: {
+          select: {
+            books: true,
+            Transaction: {
+              where: {
+                isDue: false,
+              },
+            },
+          },
+        },
+      },
     });
+
+    // @ts-ignore
+    const { _count, ...rest } = Books;
 
     response.send({
       message: Books ? "User details found successfully" : "User not found",
-      data: Books || {},
+      data: {
+        ...rest,
+        total_dues: _count.Transaction || 0,
+        total_books: _count.books || 0,
+      },
     });
   } catch (e: any) {
     console.log("e: ", e);

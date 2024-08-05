@@ -44,12 +44,13 @@ model User {
 }
 
 model Transaction {
-  id              Int       @id @default(autoincrement())
-  userId          Int
-  bookId          Int
-  checkoutDate    DateTime
-  dueDate         DateTime?
-  isDue           Boolean   @default(true)
-  user            User      @relation(fields: [userId], references: [id])
-  book            Book      @relation(fields: [bookId], references: [id])
+  id           Int       @id @default(autoincrement())
+  userId       Int
+  bookId       Int
+  checkoutDate DateTime
+  dueDate      DateTime?
+  returnDate   DateTime?
+  isDue        Boolean   @default(true)
+  user         User      @relation(fields: [userId], references: [id])
+  book         Book      @relation(fields: [bookId], references: [id])
 }

@@ -18,4 +18,5 @@ export const UsersRoutes = {
 
 export const TransactionsRoutes = {
   AssignBook: "/assign-book",
+  ReturnBook: "/return-book",
 };
