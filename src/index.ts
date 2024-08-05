@@ -4,6 +4,7 @@ import morgan from "morgan";
 import { booksRouter } from "./routes";
 import { usersRouter } from "./routes/users";
 import { transactionsRouter } from "./routes/transactions";
+import { authorRouter } from "./routes/author";
 require("dotenv").config();
 
 const app = express();
@@ -20,10 +21,11 @@ const port = process.env.PORT || 3000;
 app.use("/v1/books", booksRouter);
 app.use("/v1/users", usersRouter);
 app.use("/v1/transactions", transactionsRouter);
+app.use("/v1/author", authorRouter);
 
 // Error handling middleware
 app.use((req: Request, res: Response) => {
-  console.log("res: ", res);
+  // console.log("res: ", res);
   res.json({ error: "Server error" });
 });
 

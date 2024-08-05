@@ -125,16 +125,28 @@ export const getUserDetailsFromDB = async (
     const Books = await prismaClient.user.findUnique({
       where: { id: Number(user_id) },
       include: {
-        books: true,
-        Transaction: true,
+        books: {
+          where: {
+            Transaction: {
+              every: {
+                isDue: true,
+              },
+            },
+          },
+        },
+        Transaction: {
+          include: {
+            book: true,
+          },
+        },
         _count: {
           select: {
-            books: true,
             Transaction: {
               where: {
                 isDue: false,
               },
             },
+            books: true,
           },
         },
       },

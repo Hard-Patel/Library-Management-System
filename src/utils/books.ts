@@ -5,8 +5,15 @@ import {
   IUpdateBookRequest,
 } from "../interface/book";
 import { Prisma } from "@prisma/client";
+import { updateKey } from "./common";
 
-const allowedUpdates = ["title", "quantity", "isbn", "publish_date", "author_id"];
+const allowedUpdates = [
+  "title",
+  "quantity",
+  "isbn",
+  "publish_date",
+  "author_id",
+];
 const mapAllowedUpdates: { [key: string]: any } = {
   title: "title",
   quantity: "quantity",
@@ -14,21 +21,6 @@ const mapAllowedUpdates: { [key: string]: any } = {
   publish_date: "publishedDate",
   author_id: "authorId",
 };
-
-function updateKey(
-  obj: { [key: string]: any },
-  oldKey: string,
-  newKey: string
-) {
-  // Check if the old key exists in the object
-  if (!_.has(obj, oldKey)) {
-    return obj; // Return the original object if the old key does not exist
-  }
-
-  const value = obj[oldKey];
-  const newObject = _.omit(obj, oldKey); // Create a new object without the old key
-  return { ...newObject, [newKey]: value }; // Add the new key with its value
-}
 
 export const mapUpdatedData = (data: IUpdateBookRequest) => {
   let validated = _.pickBy(

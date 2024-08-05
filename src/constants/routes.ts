@@ -21,3 +21,11 @@ export const TransactionsRoutes = {
   AssignBook: "/assign-book",
   ReturnBook: "/return-book",
 };
+
+export const AuthorRoutes = {
+  GetAuthors: "/get-authors",
+  GetAuthorDetails: "/get-author-details/:author_id",
+  AddAuthor: "/add-author",
+  UpdateAuthor: "/update-author",
+  DeleteAuthor: "/delete-author/:author_id",
+};
