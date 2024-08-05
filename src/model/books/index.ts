@@ -57,7 +57,12 @@ export const getBookFromDB = async (request: Request, response: Response) => {
       message: Books.length
         ? "Books list fetched successfully"
         : "Books list not present",
-      data: Books || [],
+      data: {
+        books: Books || [],
+        count: Books.length,
+        page: page || 1,
+        size: size || 10,
+      },
     });
   } catch (e: any) {
     console.log("e: ", e);

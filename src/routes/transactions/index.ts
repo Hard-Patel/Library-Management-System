@@ -1,9 +1,11 @@
 import express from "express";
 import { TransactionsRoutes } from "../../constants/routes";
-import { assignBook, returnBook } from "../../controller/transactions";
+import { assignBook, getTransactions, returnBook } from "../../controller/transactions";
 import { authentication } from "../../middleware/authentication";
 
 const router = express.Router();
+
+router.get(TransactionsRoutes.GetTransaction, [authentication], getTransactions);
 
 router.post(TransactionsRoutes.AssignBook, [authentication], assignBook);
 

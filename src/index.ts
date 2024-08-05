@@ -2,7 +2,6 @@ import express, { Request, Response } from "express";
 import bodyParser from "body-parser";
 import morgan from "morgan";
 import { booksRouter } from "./routes";
-import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 import { usersRouter } from "./routes/users";
 import { transactionsRouter } from "./routes/transactions";
 require("dotenv").config();

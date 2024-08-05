@@ -8,3 +8,8 @@ export interface IReturnBookRequest {
   transaction_id: number;
   return_date: Date;
 }
+
+export interface IGetTransactionsRequest {
+  all?: "1" | "2";
+  due?: "1" | "2";
+}

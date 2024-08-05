@@ -17,6 +17,7 @@ export const UsersRoutes = {
 };
 
 export const TransactionsRoutes = {
+  GetTransaction: "/get-transactions",
   AssignBook: "/assign-book",
   ReturnBook: "/return-book",
 };
